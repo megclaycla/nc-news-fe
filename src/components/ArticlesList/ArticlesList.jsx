@@ -4,6 +4,7 @@ import { useState } from "react";
 import ArticleCard from "../ArticleCard/ArticleCard";
 import './ArticlesList.css'
 import Loading from "../Loading/Loading";
+import StyledCardBox from "../StyledCardBox/StyledCardBox";
 
 
 function ArticlesList({articles, setArticles}) {
@@ -26,9 +27,9 @@ const [isLoading, setIsLoading] = useState(true)
     if (isLoading) {
         return <Loading/>
     }
-
+//has this addressed task 10? need to update the URL
     return (
-        <>
+        <div id="article-card">
         <section id="articles-categories">
             <h1>Filter by Topic:</h1>
             <select value={newCategory} onChange={(event) => {
@@ -43,11 +44,13 @@ const [isLoading, setIsLoading] = useState(true)
             <h1>Articles:</h1>
             <ul>
                 {articles.map((article) => {
-                    return <ArticleCard  key={article.article_id} article={ article } />
+                    return <StyledCardBox key={article.article_id}>
+                        <ArticleCard   article={article} />
+                    </StyledCardBox>
                 })}
             </ul>
         </section>
-        </>
+        </div>
     )
 }
 
