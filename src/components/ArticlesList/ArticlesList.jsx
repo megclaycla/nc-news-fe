@@ -3,9 +3,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 import ArticleCard from "../ArticleCard/ArticleCard";
 import './ArticlesList.css'
+import Loading from "../Loading/Loading";
+
 
 function ArticlesList({articles, setArticles}) {
 const [newCategory, setNewCategory] = useState("")
+const [isLoading, setIsLoading] = useState(true)
 
     let url = "https://nc-news-npka.onrender.com/api/articles"
     useEffect(() => {
@@ -16,8 +19,13 @@ const [newCategory, setNewCategory] = useState("")
         .then((response) => response.json())
         .then((data) => {
             setArticles(data.articles)
+            setIsLoading(false)
         })
     }, [newCategory])
+
+    if (isLoading) {
+        return <Loading/>
+    }
 
     return (
         <>
@@ -35,7 +43,7 @@ const [newCategory, setNewCategory] = useState("")
             <h1>Articles:</h1>
             <ul>
                 {articles.map((article) => {
-                    return <ArticleCard key={article.article_id} article={ article } />
+                    return <ArticleCard  key={article.article_id} article={ article } />
                 })}
             </ul>
         </section>
