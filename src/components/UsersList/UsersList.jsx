@@ -1,6 +1,8 @@
 import {Link} from "react-router-dom"
 
 function UsersList() {
+
+    //setLoggedInUser destructured like Header?
     return (
         <>
         <h1>Hello from users list</h1>
