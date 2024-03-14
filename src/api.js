@@ -29,7 +29,6 @@ export const getTopics = () => {
 export const changeVote = (article_id, body) => {
     return newsApi.patch(`/articles/${article_id}`, body)
     .then(({data}) =>{
-        console.log(data.votes, "<<<<<<data in changevote")
         return data
     })
 }

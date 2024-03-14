@@ -29,7 +29,6 @@ function SingleArticle(){
     }
 
     const handleUpVote = (article_id) => {
-        console.log(article.votes, "<<<<article up votes")
             setVotes((currCount) => currCount + 1);
             changeVote(article_id, {"inc_votes": 1})
             .catch((err) => {
