@@ -1,25 +1,28 @@
 import { useState } from "react";
 import { postComment } from "../../api";
 
-function CommentAdder({setComments}){
+function CommentAdder({article_id, comments, setComments}){
     const [newComment, setNewComment] = useState("")
+    const [postError, setPostError] = useState(false)
+    const user = "grumpy19"
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        postComment(newComment)
+        postComment(article_id, {author: user, body: newComment})
         .then((newCommentFromApi)=>{
-            console.log(newCommentFromApi, "<<<<newCommentFromApi")
-            setNewComment("")
-
             setComments((currComments) => {
-                return [newCommentFromApi,...currComments]
+                return [newCommentFromApi, ...currComments]
             })
+            setNewComment("")
+        })
+        .catch((err) => {
+            console.log(err, "<<<<<error");
+            setPostError(true)
         })
     }
 
     return (
         <form className="Comment-adder" onSubmit={handleSubmit}>
-            <label htmlFor="newComment">Have your say</label>
             <br></br>
             <textarea
             id="newComment" 
