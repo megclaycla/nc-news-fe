@@ -7,6 +7,7 @@ import Loading from "../Loading/Loading";
 import StyledCardBox from "../StyledCardBox/StyledCardBox";
 
 
+
 function ArticlesList({articles, setArticles}) {
 const [newCategory, setNewCategory] = useState("")
 const [isLoading, setIsLoading] = useState(true)
@@ -27,7 +28,7 @@ const [isLoading, setIsLoading] = useState(true)
     if (isLoading) {
         return <Loading/>
     }
-//has this addressed task 10? need to update the URL
+
     return (
         <div id="article-card">
         <section id="articles-categories">

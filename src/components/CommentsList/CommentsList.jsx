@@ -18,7 +18,7 @@ function CommentsList({comments, setComments, article_id}){
     return (
         <section id="article-comments">
             <p>Displaying comments about article {article_id}:</p>
-            <ul>
+            <ul className="comments_list">
             {viewComments.map((comment) => {
                 return <StyledCardBox key={comment.comment_id}>
                             <CommentCard  comment={ comment }/>
