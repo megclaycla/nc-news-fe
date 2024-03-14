@@ -26,6 +26,13 @@ export const getTopics = () => {
     })
 }
 
+export const getUsers = () => {
+    return newsApi.get("users")
+    .then(({data}) => {
+        return data.users
+    })
+}
+
 export const changeVote = (article_id, body) => {
     return newsApi.patch(`/articles/${article_id}`, body)
     .then(({data}) =>{
@@ -41,10 +48,11 @@ export const postComment = (article_id, body) => {
     })
 }
 
-
-export const patchComment = (article_id, comment_id) => {
-    const patchBody = {
-        increase: 1,
-    }
-    return newsApi.patch(`/articles/${article_id}/comments/`)
+export const deleteCommentById = (comment_id) => {
+        return newsApi.delete(`/comments/${comment_id}`)
+    .then(() => {
+        
+    })
 }
+
+

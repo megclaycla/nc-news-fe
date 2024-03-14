@@ -1,16 +1,15 @@
 import CommentCard from "../CommentCard/CommentCard";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { getCommentsById } from "../../api";
 import StyledCardBox from "../StyledCardBox/StyledCardBox";
 import './CommentsList.css'
 
 function CommentsList({comments, setComments, article_id}){
-    const [viewComments, setViewComments] = useState([])
     
     useEffect(()=> {
         getCommentsById(article_id)
         .then((data)=>
-        setViewComments(data)
+        setComments(data)
         )
     }, [article_id])
 
@@ -19,9 +18,9 @@ function CommentsList({comments, setComments, article_id}){
         <section id="article-comments">
             <p>Displaying comments about article {article_id}:</p>
             <ul className="comments_list">
-            {viewComments.map((comment) => {
+            {comments.map((comment, index) => {
                 return <StyledCardBox key={comment.comment_id}>
-                            <CommentCard  comment={ comment }/>
+                            <CommentCard comment_id={comment.comment_id} comment={ comment } comments={comments} setComments={setComments}/>
                         </StyledCardBox>
             })}
             </ul>

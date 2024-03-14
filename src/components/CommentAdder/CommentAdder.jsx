@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { postComment } from "../../api";
+import UserContext from "../../contexts/User";
 
 function CommentAdder({article_id, comments, setComments}){
+    const { loggedInUser } = useContext(UserContext)
+
     const [newComment, setNewComment] = useState("")
-    const [postError, setPostError] = useState(false)
-    const user = "grumpy19"
+    const user = loggedInUser
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -14,10 +16,6 @@ function CommentAdder({article_id, comments, setComments}){
                 return [newCommentFromApi, ...currComments]
             })
             setNewComment("")
-        })
-        .catch((err) => {
-            console.log(err, "<<<<<error");
-            setPostError(true)
         })
     }
 
@@ -29,10 +27,11 @@ function CommentAdder({article_id, comments, setComments}){
             multiline="true" 
             placeholder="Have your say"
             value={newComment} 
-            onChange={(e) => setNewComment(e.target.value)}>
+            onChange={(e) => setNewComment(e.target.value)}
+            required>
             </textarea>
             <br></br>
-            <button onClick={handleSubmit} type="submit">Add a comment</button>
+            <button type="submit">Add a comment</button>
         </form>
     )
 }
