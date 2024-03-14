@@ -1,20 +1,24 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {getArticleById, getCommentsById} from "../../api";
+import {changeVote, getArticleById} from "../../api";
 import Loading from "../Loading/Loading";
 import CommentsList from "../CommentsList/CommentsList";
 import Expander from "../Expander/Expander";
-import SimpleDateTime from "react-simple-timestamp-to-date";
+import SingleArticleCard from "../SingleArticleCard/SingleArticleCard";
+import CommentAdder from "../CommentAdder/CommentAdder";
 
 function SingleArticle(){
     const { article_id } = useParams()
     const [article, setArticle] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [comments, setComments] = useState([])
+    const [votes, setVotes] = useState(0)
+    const [err, setErr] = useState("")
 
     useEffect(() => {
         setIsLoading(true)
         getArticleById(article_id).then((article) => {
+            setVotes(article.votes)
             setArticle(article)
             setIsLoading(false)
         })
@@ -24,22 +28,52 @@ function SingleArticle(){
         return <Loading/>
     }
 
+    const handleUpVote = (article_id) => {
+        console.log(article.votes, "<<<<article up votes")
+            setVotes((currCount) => currCount + 1);
+            changeVote(article_id, {"inc_votes": 1})
+            .catch((err) => {
+                setVotes((currCount) => currCount - 1);
+                setErr("Something went wrong, please try again")
+            })
+    }
+
+    const handleDownVote = (article_id) => {
+        console.log(article.votes, "<<<<article down votes")
+            setVotes((currCount) => currCount - 1);
+            changeVote(article_id, {"inc_votes": - 1})
+            .catch((err) => {
+                setVotes((currCount) => currCount + 1);
+                setErr("Something went wrong, please try again")
+            })
+    }
+    //Haz's lecture on UI and optimistic rendering 07.03 will be helpful here and also for task 8?
+
     return (
         <div id="single-article">
-            <h2>{article.title}</h2>
-            <p>Author: {article.author}</p>
-            <img id="article-img-url" src={article.article_img_url} />
-            <p>{article.body}</p>
-            <p>Created at:</p>
-            <SimpleDateTime dateSeparator="/" format='DMY' timeSeparator=":" meridians="0">{article.created_at}</SimpleDateTime>
+            <SingleArticleCard article={article}/>
             <p>Comments: {article.comment_count}</p>
-            <button>Add a comment</button>
+            <CommentAdder article_id={article_id} setComments={setComments}/>
             <Expander>
                 <CommentsList comments={comments} setComments={setComments} article_id={article_id}/>
             </Expander>
-            <button>Vote</button>
+                <p>Votes: {votes} </p>
+                <button onClick={() => handleUpVote(article.article_id)}>
+                    <span aria-label="up-votes for this article">Like</span>
+                </button>
+                <button onClick={() => handleDownVote(article.article_id)}>
+                    <span aria-label="down-votes for this article">Dislike</span>
+                </button>
         </div>
     )
 }
 
 export default SingleArticle;
+
+   //the below within a bigger function
+    // setComments((currComments) => {
+    //     return currComments.map((comment) => {
+    //         return comment
+    //     })
+    // })
+    //patchComment()
