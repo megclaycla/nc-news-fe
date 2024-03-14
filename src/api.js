@@ -29,19 +29,15 @@ export const getTopics = () => {
 export const changeVote = (article_id, body) => {
     return newsApi.patch(`/articles/${article_id}`, body)
     .then(({data}) =>{
-        console.log(data.votes, "<<<<<<data in changevote")
         return data
     })
 }
 
 
-export const postComment = (newCommentText) => {
-    const postBody = {
-        text: newCommentText,
-    };
-    return newsApi.post(`/articles/${article_id}/comments`, postBody)
+export const postComment = (article_id, body) => {
+    return newsApi.post(`/articles/${article_id}/comments`, body)
     .then(({data}) => {
-        return data.comment
+        return data
     })
 }
 

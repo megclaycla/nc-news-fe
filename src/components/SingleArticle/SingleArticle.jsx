@@ -29,7 +29,6 @@ function SingleArticle(){
     }
 
     const handleUpVote = (article_id) => {
-        console.log(article.votes, "<<<<article up votes")
             setVotes((currCount) => currCount + 1);
             changeVote(article_id, {"inc_votes": 1})
             .catch((err) => {
@@ -39,7 +38,6 @@ function SingleArticle(){
     }
 
     const handleDownVote = (article_id) => {
-        console.log(article.votes, "<<<<article down votes")
             setVotes((currCount) => currCount - 1);
             changeVote(article_id, {"inc_votes": - 1})
             .catch((err) => {
@@ -47,13 +45,12 @@ function SingleArticle(){
                 setErr("Something went wrong, please try again")
             })
     }
-    //Haz's lecture on UI and optimistic rendering 07.03 will be helpful here and also for task 8?
 
     return (
         <div id="single-article">
             <SingleArticleCard article={article}/>
             <p>Comments: {article.comment_count}</p>
-            <CommentAdder article_id={article_id} setComments={setComments}/>
+            <CommentAdder article_id={article_id} comments={comments} setComments={setComments}/>
             <Expander>
                 <CommentsList comments={comments} setComments={setComments} article_id={article_id}/>
             </Expander>
