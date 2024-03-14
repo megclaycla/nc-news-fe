@@ -11,11 +11,11 @@ import "./App.css"
 
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState({username: 'grumpy19', avatar_url: 'https://images.unsplash.com/photo-1611752554510-94b98a0e64ae?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'})
+  const [loggedInUser, setLoggedInUser] = useState({username: 'grumpy19', avatar_url: "https://vignette.wikia.nocookie.net/mrmen/images/7/78/Mr-Grumpy-3A.PNG/revision/latest?cb=20170707233013"})
   const [articles, setArticles] = useState([])
 
   const [isLoading, setIsLoading] = useState(true)
-//can i move the articles state down into articles list and remove the topics page/component?
+
 
   return (
     <UserContext.Provider value={{loggedInUser:loggedInUser, setLoggedInUser: setLoggedInUser}}>

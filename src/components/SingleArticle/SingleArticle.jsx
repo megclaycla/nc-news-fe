@@ -67,10 +67,3 @@ function SingleArticle(){
 
 export default SingleArticle;
 
-   //the below within a bigger function
-    // setComments((currComments) => {
-    //     return currComments.map((comment) => {
-    //         return comment
-    //     })
-    // })
-    //patchComment()
