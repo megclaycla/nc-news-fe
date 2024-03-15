@@ -6,6 +6,7 @@ import CommentsList from "../CommentsList/CommentsList";
 import Expander from "../Expander/Expander";
 import SingleArticleCard from "../SingleArticleCard/SingleArticleCard";
 import CommentAdder from "../CommentAdder/CommentAdder";
+import NotFound from "../NotFound/NotFound";
 
 function SingleArticle(){
     const { article_id } = useParams()
@@ -14,15 +15,23 @@ function SingleArticle(){
     const [comments, setComments] = useState([])
     const [votes, setVotes] = useState(0)
     const [err, setErr] = useState("")
+    const [articleError, setArticleError] = useState(false)
 
     useEffect(() => {
         setIsLoading(true)
         getArticleById(article_id).then((article) => {
             setVotes(article.votes)
             setArticle(article)
-            setIsLoading(false)
         })
+        .catch((error) => {
+            setArticleError(true)
+        })
+        setIsLoading(false)
     }, [article_id])
+
+    if (articleError) {
+        return <NotFound/>
+    }
 
     if (isLoading) {
         return <Loading/>

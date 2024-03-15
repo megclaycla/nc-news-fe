@@ -2,11 +2,29 @@
     width: 100px;
     height: 100px;
     border-radius: 25px;
+    border: solid;
 }
 
 header {
+    color:aliceblue;
     text-align: center;
+    background-color: #193C57;
+    border-bottom-color: #408dc8;
+    border-bottom-width: 15px;
+    border-bottom-style: solid;
 }
 
+#nav {
+    margin: 10px;
+    padding: 10px;
+}
 
+.link {
+    font-size: large;
+    margin: 15px;
+    color: aliceblue;
+}
 
+p {
+    color:aliceblue
+}

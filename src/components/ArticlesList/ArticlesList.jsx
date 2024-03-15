@@ -7,29 +7,36 @@ import Loading from "../Loading/Loading";
 import StyledCardBox from "../StyledCardBox/StyledCardBox";
 import { useSearchParams } from "react-router-dom";
 import { getArticles, getArticlesByTopics } from "../../api";
+import SortBy from "../SortBy/SortBy";
 
 function ArticlesList({articles, setArticles}) {
-    const [newCategory, setNewCategory] = useState("")
+    const [sortBy, setSortBy] = useState("")
     const [isLoading, setIsLoading] = useState(true)
     const [searchParams] = useSearchParams()
     const topic = searchParams.get("topic")
 
-
     useEffect(() => {
         setIsLoading(true)
         if(topic === null){
-            getArticles(articles).then((data)=>{
+            console.log("hiyaaa");
+            getArticles(articles)
+            .then((data)=>{
                 setArticles(data)
                 setIsLoading(false)
             })
         } else {
+            console.log("hello");
             getArticlesByTopics(topic)
             .then((data) => {
+                console.log(data);
                 setArticles(data)
                 setIsLoading(false)
             })
+            .catch((err) => {
+                console.log(err);
+            })
         }
-    }, [newCategory])
+    }, [sortBy])
 
     if (isLoading) {
         return <Loading/>
@@ -37,6 +44,9 @@ function ArticlesList({articles, setArticles}) {
 
     return (
         <div id="article-card">
+            <section id="sort-by">
+                <SortBy sortBy={sortBy} setSortBy={setSortBy} setArticles={setArticles} articles={articles} />
+            </section>
         <section id="articles-available">
             <h1>Articles:</h1>
             <ul>

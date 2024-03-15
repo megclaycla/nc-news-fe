@@ -18,6 +18,13 @@ export const getArticles = () => {
     })
 }
 
+export const sortArticles = (sortParam) => {
+        return newsApi.get(`/articles?sort_by=${sortParam}`)
+        .then(({data}) =>{  
+        return data.articles
+    })
+}
+
 export const getCommentsById = (article_id) => {
     return newsApi.get(`/articles/${article_id}/comments`)
     .then(({data}) => {
@@ -52,7 +59,6 @@ export const changeVote = (article_id, body) => {
         return data
     })
 }
-
 
 export const postComment = (article_id, body) => {
     return newsApi.post(`/articles/${article_id}/comments`, body)

@@ -8,7 +8,7 @@ import UsersList from '../UsersList/UsersList'
 import UserContext from '../../contexts/User'
 import SingleArticle from '../SingleArticle/SingleArticle'
 import "./App.css"
-
+import NotFound from '../NotFound/NotFound'
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({username: 'grumpy19', avatar_url: "https://vignette.wikia.nocookie.net/mrmen/images/7/78/Mr-Grumpy-3A.PNG/revision/latest?cb=20170707233013"})
@@ -22,10 +22,11 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/topics' element={<TopicsList topics={topics} setTopics={setTopics} articles={articles} setArticles={setArticles} isLoading={isLoading} setIsLoading={setIsLoading} />} />
+        <Route path='/topics' element={<TopicsList topics={topics} setTopics={setTopics} isLoading={isLoading} setIsLoading={setIsLoading} />} />
         <Route path='/articles' element={<ArticlesList articles={articles} setArticles={setArticles} isLoading={isLoading} setIsLoading={setIsLoading}/>} />
         <Route path='/users' element={<UsersList />} />
         <Route path='/articles/:article_id' element={<SingleArticle />} />
+        <Route path='*' element={<NotFound />}/>
       </Routes>
     </UserContext.Provider>
   )

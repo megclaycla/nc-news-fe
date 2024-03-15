@@ -4,7 +4,6 @@ import UserContext from "../../contexts/User";
 
 function CommentAdder({article_id, comments, setComments}){
     const { loggedInUser } = useContext(UserContext)
-
     const [newComment, setNewComment] = useState("")
     const user = loggedInUser
 

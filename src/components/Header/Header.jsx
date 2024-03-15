@@ -10,11 +10,12 @@ function Header(){
             <h1>NC News</h1>
             <img src={loggedInUser.avatar_url} className="logged-in-img" />
             <p>{loggedInUser.username} is logged in</p>
+
             <nav id="nav">
-                <Link to='/'>Home</Link>
-                <Link to='/topics'>Topics</Link>
-                <Link to='/articles'>Articles</Link>
-                <Link to='/users'>Users</Link>
+                <Link to='/' className="link">Home</Link>
+                <Link to='/topics' className="link">Topics</Link>
+                <Link to='/articles' className="link">Articles</Link>
+                <Link to='/users' className="link">Users</Link>
             </nav>
         </header>
     )
