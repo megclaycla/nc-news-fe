@@ -5,24 +5,30 @@ import ArticleCard from "../ArticleCard/ArticleCard";
 import './ArticlesList.css'
 import Loading from "../Loading/Loading";
 import StyledCardBox from "../StyledCardBox/StyledCardBox";
-
-
+import { useSearchParams } from "react-router-dom";
+import { getArticles, getArticlesByTopics } from "../../api";
 
 function ArticlesList({articles, setArticles}) {
-const [newCategory, setNewCategory] = useState("")
-const [isLoading, setIsLoading] = useState(true)
+    const [newCategory, setNewCategory] = useState("")
+    const [isLoading, setIsLoading] = useState(true)
+    const [searchParams] = useSearchParams()
+    const topic = searchParams.get("topic")
 
-    let url = "https://nc-news-npka.onrender.com/api/articles"
+
     useEffect(() => {
-        if (newCategory){
-            url += `?topic=${newCategory}`
+        setIsLoading(true)
+        if(topic === null){
+            getArticles(articles).then((data)=>{
+                setArticles(data)
+                setIsLoading(false)
+            })
+        } else {
+            getArticlesByTopics(topic)
+            .then((data) => {
+                setArticles(data)
+                setIsLoading(false)
+            })
         }
-        fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-            setArticles(data.articles)
-            setIsLoading(false)
-        })
     }, [newCategory])
 
     if (isLoading) {
@@ -31,16 +37,6 @@ const [isLoading, setIsLoading] = useState(true)
 
     return (
         <div id="article-card">
-        <section id="articles-categories">
-            <h1>Filter by Topic:</h1>
-            <select value={newCategory} onChange={(event) => {
-                setNewCategory(event.target.value)}}>
-                <option value="">All</option>
-                <option value="coding">Coding</option>
-                <option value="football">Football</option>
-                <option value="cooking">Cooking</option>
-            </select>
-        </section>
         <section id="articles-available">
             <h1>Articles:</h1>
             <ul>
@@ -56,3 +52,5 @@ const [isLoading, setIsLoading] = useState(true)
 }
 
 export default ArticlesList;
+
+

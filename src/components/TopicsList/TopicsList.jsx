@@ -5,11 +5,11 @@ import TopicCard from "../TopicCard/TopicCard";
 import Loading from "../Loading/Loading";
 import StyledCardBox from "../StyledCardBox/StyledCardBox";
 
-function TopicsList({isLoading, setIsLoading}) {
-    const [topics, setTopics] = useState([])
-
+function TopicsList({isLoading, setIsLoading, topics, setTopics}) {
+    
     useEffect(() => {
-        getTopics()
+        setIsLoading(true)
+        getTopics(topics)
         .then((data) =>
         setTopics(data))
         setIsLoading(false)
@@ -25,7 +25,7 @@ function TopicsList({isLoading, setIsLoading}) {
         <ul>
             {topics.map((topic)=> {
                 return <StyledCardBox key={topic.slug}>
-                    <TopicCard  topic={topic}/>
+                    <TopicCard  topic={topic} isLoading={isLoading} />
                 </StyledCardBox>
             })}
         </ul>
